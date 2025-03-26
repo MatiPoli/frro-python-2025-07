@@ -38,6 +38,7 @@ def multiplicar_reduce(numeros: Iterable[float]) -> float:
     """CHALLENGE OPCIONAL - Re-escribir utilizando reduce.
     Referencia: https://docs.python.org/3.8/library/functools.html#functools.reduce
     """
+    return reduce(lambda x,y: x*y, numeros) if len(numeros) != 0 else 0
     pass # Completar
 
 
