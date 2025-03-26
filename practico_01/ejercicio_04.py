@@ -8,7 +8,18 @@ def es_vocal_if(letra: str) -> bool:
     Restricción: Utilizar un if para cada posibilidad con la función lower().
     Referencia: https://docs.python.org/3/library/stdtypes.html#string-methods
     """
-    pass # Completar
+    if letra.lower() == 'a':
+        return True
+    elif letra.lower() == 'e':
+        return True
+    elif letra.lower() == 'i':
+        return True
+    elif letra.lower() == 'o':
+        return True
+    elif letra.lower() == 'u':
+        return True
+    else:
+        return False
 
 
 # NO MODIFICAR - INICIO
