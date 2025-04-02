@@ -9,8 +9,17 @@ class Articulo:
         - Utilizar sólamente el constructor (__init__) y un método de
           clase (@classmethod) con una variable de clase
     """
-
-    # Completar
+    nombre: str
+    _last_id: int = 0
+    id_: int
+    def __init__(self, nombre: str = None):
+        self.nombre = nombre
+        Articulo._last_id += 1
+        self.id_ = Articulo._last_id
+    @classmethod
+    def obtener_id(cls) -> int:
+        """Método de clase que devuelve el id del último artículo creado"""
+        return cls._last_id
 
 
 # NO MODIFICAR - INICIO

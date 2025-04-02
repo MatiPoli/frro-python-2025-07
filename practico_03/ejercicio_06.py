@@ -15,7 +15,15 @@ class Article:
         self.name = name
 
     # NO MODIFICAR - FIN
-
+    def __str__(self) -> str:
+        return self.name
+    def __repr__(self) -> str:
+        return f"Article('{self.name}')"
+    def __eq__(self, other: Article) -> bool:
+        return self.name == other.name
+    def __hash__(self) -> int:
+        return hash(self.name)
+   
     # Completar
 
 
@@ -48,8 +56,15 @@ class ShoppingCart:
         return self
 
     # NO MODIFICAR - FIN
-
-    # Completar
+    def __str__(self) -> str: # Define como se convierte un objeto a una cadena con str() o al usar print
+        return str([article.name for article in self.articles])
+    def __repr__(self) -> str: # Define como se convierte un objeto a una cadena con repr()
+        return f"ShoppingCart([{', '.join(repr(article) for article in self.articles)}])"
+    def __add__(self, other: ShoppingCart) -> ShoppingCart: # Define como se suma un objeto con otro con +, +=
+        new_articles = self.articles + other.articles
+        return ShoppingCart(new_articles)
+    def __eq__(self, other: ShoppingCart) -> bool: # Define como se compara un objeto con otro con ==, !=, <, >, <=, >=
+        return set(self.articles) == set(other.articles)
 
 
 # NO MODIFICAR - INICIO
