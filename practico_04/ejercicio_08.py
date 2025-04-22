@@ -2,9 +2,11 @@
 
 import datetime
 
-from practico_04.ejercicio_02 import agregar_persona
-from practico_04.ejercicio_06 import reset_tabla
-from practico_04.ejercicio_07 import agregar_peso
+from ejercicio_02 import agregar_persona
+from ejercicio_06 import reset_tabla
+from ejercicio_07 import agregar_peso
+from ejercicio_04 import buscar_persona
+import sqlite3
 
 
 def listar_pesos(id_persona):
@@ -30,7 +32,22 @@ def listar_pesos(id_persona):
 
     - False en caso de no cumplir con alguna validacion.
     """
-    return []
+    if buscar_persona(id_persona) != False:
+        con = sqlite3.connect("data.db")
+        cur = con.cursor()
+        cur.execute("SELECT Fecha, Peso FROM PersonaPeso WHERE IdPersona = ?", (id_persona,))
+        resultado = cur.fetchall()
+        con.close()
+        if resultado is not None:
+            lista = []
+            for fecha, peso in resultado:
+                fecha_formateada = fecha.split()[0]
+                lista.append((fecha_formateada, peso))
+            return lista
+        else:
+            return []
+    else:
+        return False
 
 
 # NO MODIFICAR - INICIO
