@@ -1,0 +1,33 @@
+#:import Factory kivy.factory.Factory
+
+BoxLayout:
+    orientation: 'vertical'
+    Button:
+        id: mainButton
+        text: 'Selecciona una opción'
+        size_hint: (0.5, None)
+        height: 44
+        pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+        on_release:
+            mainButton.text = 'Selecciona una opción'
+            Factory.CustomDropDown().open(self)
+    Widget:
+
+<CustomDropDown@DropDown>:
+    on_select: app.root.ids.mainButton.text = args[1]
+
+    OptionButton:
+        text: 'Opción 1'
+        on_release: root.select(self.text)
+
+    OptionButton:
+        text: 'Opción 2'
+        on_release: root.select(self.text)
+
+    OptionButton:
+        text: 'Opción 3'
+        on_release: root.select(self.text)
+
+<OptionButton@Button>
+    size_hint_y: None
+    height: 44
