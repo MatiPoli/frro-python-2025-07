@@ -1,7 +1,6 @@
 #:import Factory kivy.factory.Factory
 
 BoxLayout:
-    orientation: 'vertical'
     Button:
         id: mainButton
         text: 'Selecciona una opción'
@@ -11,7 +10,6 @@ BoxLayout:
         on_release:
             mainButton.text = 'Selecciona una opción'
             Factory.CustomDropDown().open(self)
-    Widget:
 
 <CustomDropDown@DropDown>:
     on_select: app.root.ids.mainButton.text = args[1]
