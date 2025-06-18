@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <h2>Registro</h2>
+    <form method="post" action="{{ url_for('register') }}">
+        <label class="login-label" for="username">Nombre de usuario:</label>
+        <input class="login-input" type="text" id="username" name="username" required>
+        <label class="login-label" for="email">Email:</label>
+        <input class="login-input" type="email" id="email" name="email" required>
+        <label class="login-label" for="password">Contraseña:</label>
+        <input class="login-input" type="password" id="password" name="password" required>
+        {% if error %}
+        <div class="login-error">{{ error }}</div>
+        {% endif %}
+        {% if mensaje %}
+            <div class="register-success">{{ mensaje }}</div>
+            <a class="register-success-button" href="{{ url_for('login') }}">Ir a Iniciar sesión</a>
+        {% endif %}
+        <input class="button" type="submit" value="Registrarse">
+    </form>
+</body>
+</html>

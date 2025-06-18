@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página Principal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Bienvenido</h1>
+        <p>Por favor, inicia sesión o regístrate para continuar.</p>
+        <div class="button-group">
+            <a class="main-button" href="{{ url_for('login') }}">Iniciar sesión</a>
+            <a class="main-button" href="{{ url_for('register') }}">Registrarse</a>
+        </div>
+    </div>
+</body>
+</html>

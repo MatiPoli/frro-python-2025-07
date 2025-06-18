@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+    <div class="home-container">
+        <h2>Bienvenido, {{ username }}</h2>
+        <p>Has iniciado sesión correctamente.</p>
+        <form action="{{ url_for('logout') }}">
+            <input class="button" type="submit" value="Cerrar sesión">
+        </form>
+    </div>
+</body>
+</html>
