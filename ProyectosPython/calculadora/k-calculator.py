@@ -3,6 +3,8 @@ from kivy.app import App
 from kivy.uix.gridlayout import GridLayout 
 from kivy.config import Config
 
+__version__ = "1.0.0"
+
 class CalcGridLayout(GridLayout):
     def calculate(self, calculation):
         if calculation:
