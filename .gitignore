@@ -103,3 +103,5 @@ ENV/
 .idea
 
 /ProyectosPython/ytTest/client_secret.json
+
+.json

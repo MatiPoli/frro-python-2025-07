@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de {{ username }} | FriendScriptions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl p-8">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-800">{{ username }}</h1>
+            <p class="text-gray-500 text-lg mt-2">Tu perfil de FriendScriptions</p>
+        </header>
+
+        <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center mb-12">
+            <div class="bg-blue-50 p-6 rounded-xl shadow-inner border border-blue-200">
+                <p class="text-3xl font-bold text-blue-600">{{ following_count }}</p>
+                <p class="text-gray-600 mt-2">Seguidos</p>
+            </div>
+            <div class="bg-purple-50 p-6 rounded-xl shadow-inner border border-purple-200">
+                <p class="text-3xl font-bold text-purple-600">{{ followers_count }}</p>
+                <p class="text-gray-600 mt-2">Seguidores</p>
+            </div>
+            <div class="bg-green-50 p-6 rounded-xl shadow-inner border border-green-200">
+                <p class="text-3xl font-bold text-green-600">{{ subscriptions_count }}</p>
+                <p class="text-gray-600 mt-2">Suscripciones</p>
+            </div>
+        </section>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Sección de suscripciones -->
+            <section class="bg-gray-50 p-6 rounded-xl shadow-md">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Lista de Suscripciones</h2>
+                <ul class="max-h-96 overflow-y-auto space-y-2 text-gray-600">
+                    {% for sub in subscriptions %}
+                        <li class="p-3 bg-white rounded-lg shadow-sm hover:bg-gray-100 transition-colors duration-200">
+                            {{ sub.title }} <span class="text-sm text-gray-400">({{ sub.topic }})</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            
+            <!-- Gráfico de distribución de suscripciones -->
+            <section class="bg-gray-50 p-6 rounded-xl shadow-md">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Distribución de Suscripciones</h2>
+                <div id="chart-container" class="w-full h-80">
+                    <svg id="bar-chart" class="w-full h-full"></svg>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartData = {{ topic_distribution | safe }};
+
+            if (!chartData || chartData.length === 0) {
+                document.getElementById('chart-container').innerHTML = '<p class="text-center text-gray-500 mt-10">No hay datos de distribución disponibles.</p>';
+                return;
+            }
+
+            const margin = {top: 20, right: 20, bottom: 60, left: 60};
+            const container = d3.select("#bar-chart");
+            const containerWidth = parseInt(container.style("width")) - margin.left - margin.right;
+            const containerHeight = parseInt(container.style("height")) - margin.top - margin.bottom;
+
+            const svg = container.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top})`);
+            
+            const x = d3.scaleBand()
+                .range([0, containerWidth])
+                .padding(0.1)
+                .domain(chartData.map(d => d.category));
+
+            const y = d3.scaleLinear()
+                .range([containerHeight, 0])
+                .domain([0, d3.max(chartData, d => d.count)]);
+
+            // Barras del gráfico
+            svg.selectAll(".bar")
+                .data(chartData)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.category))
+                .attr("y", d => y(d.count))
+                .attr("width", x.bandwidth())
+                .attr("height", d => containerHeight - y(d.count))
+                .attr("fill", "#3b82f6");
+
+            // Eje X
+            svg.append("g")
+                .attr("transform", `translate(0, ${containerHeight})`)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "rotate(-45)")
+                .style("text-anchor", "end");
+
+            // Eje Y
+            svg.append("g")
+                .call(d3.axisLeft(y));
+            
+            // Etiqueta para el Eje Y
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left + 5)
+                .attr("x", 0 - (containerHeight / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text("Número de Suscripciones");
+        });
+    </script>
+</body>
+</html>
