@@ -46,12 +46,11 @@ def profile_view(request):
 """
 
 def profile_view(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     try:
-        print(f"VISTA 'user_info': Usuario logueado: {request.user.username}")
-        print(f"VISTA 'user_info': ¿Está autenticado? {request.user.is_authenticated}")
         youtube = get_youtube_service(request.user)
-        print("Autenticación exitosa. Obteniendo tus suscripciones...")
-        # Obtiene la lista de suscripciones del usuario y los detalles de los canales
+
         subscriptions_list = get_subscriptions_with_details(youtube)
 
         # Calcula la distribución de las suscripciones por categoría

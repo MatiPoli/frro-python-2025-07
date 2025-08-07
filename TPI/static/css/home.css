@@ -1,0 +1,201 @@
+/* --- Estilos Generales --- */
+body {
+    user-select: none;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #f4f7f6;
+    color: #333;
+    text-align: center;
+}
+
+/* --- Contenedor Principal --- */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- Encabezado --- */
+.header {
+    padding: 25px 0;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+/* --- Sección Principal (Hero) --- */
+.hero {
+    padding: 80px 0;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+    margin-top: 20px;
+}
+
+.hero h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    line-height: 1.2;
+    color: #2c3e50;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+}
+
+/* --- Botón de Inicio de Sesión con Google --- */
+.google-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px 8px 8px; /* Ajustamos el padding para el nuevo diseño */
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #4285F4;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.google-btn:hover {
+    background-color: #357ae8;
+    transform: translateY(-2px);
+}
+
+/* --- NUEVO ESTILO: El contenedor del icono --- */
+.google-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;      /* Ancho del círculo */
+    height: 40px;     /* Alto del círculo */
+    background-color: #fff;
+    border-radius: 50%; /* Esto lo hace redondo */
+    margin-right: 16px; /* Espacio entre el círculo y el texto */
+}
+
+/* --- AJUSTE AL ICONO SVG --- */
+.google-icon {
+    width: 28px;  /* Hacemos el icono un poco más grande */
+    height: 28px;
+    margin-right: 0; /* Quitamos el margen que tenía antes */
+}
+
+/* --- Sección de Características --- */
+.features {
+    padding: 80px 0 0 0;
+}
+
+.features .container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap; 
+}
+
+.feature-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    flex-basis: 280px;
+    flex-grow: 1;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.feature-card .icon {
+    font-size: 3rem;
+}
+
+.feature-card p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* --- Footer --- */
+.footer {
+    padding: 20px 0;
+    color: #888;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between; /* Empuja los elementos a los extremos */
+    align-items: center;          /* Los alinea verticalmente en el centro */
+}
+
+/* Estilo para el logo/título para que se vea como un link */
+.header .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+/* Contenedor para los botones de usuario */
+.user-nav {
+    display: flex;
+    gap: 15px; /* Espacio entre los botones */
+}
+
+/* Estilo base para los nuevos botones de navegación */
+.nav-btn {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 2px solid transparent;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Estilo específico para el botón "Mi Perfil" (con fondo) */
+.profile-btn {
+    background-color: #2c3e50; /* Azul oscuro */
+    color: #fff;
+}
+
+.profile-btn:hover {
+    background-color: #3e5771;
+}
+
+/* Estilo específico para el botón "Cerrar Sesión" (solo borde) */
+.logout-btn {
+    background-color: transparent;
+    border-color: #e74c3c; /* Un rojo suave */
+    color: #e74c3c;
+}
+
+.logout-btn:hover {
+    background-color: #e74c3c;
+    color: #fff;
+}
