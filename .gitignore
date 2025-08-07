@@ -105,3 +105,4 @@ ENV/
 /ProyectosPython/ytTest/client_secret.json
 
 .json
+TPI/authentication/client_secret.json

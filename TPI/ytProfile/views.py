@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.conf import settings
-
+from authentication.utils import get_youtube_service
 
 import os
 import google_auth_oauthlib.flow
@@ -36,31 +36,9 @@ API_VERSION = 'v3'
 CLIENT_SECRETS_FILE = 'client_secret.json'  # Asegúrate de que este archivo esté en la misma carpeta
 
 
-def get_authenticated_service():
-    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-        CLIENT_SECRETS_FILE, SCOPES)
-
-    # Esto abrirá una ventana del navegador para que te autentiques
-    # y autorices la aplicación.
-    credentials = flow.run_local_server(port=0)
-    return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
 
-def get_youtube_service(request):
-    """
-    Simula la obtención del objeto de servicio de YouTube a partir de la sesión.
-    En una implementación real, este objeto sería creado después de la autenticación.
-    """
-    credentials_data = request.session.get('credentials')
-    if not credentials_data:
-        # Redirige al inicio de sesión si no hay credenciales
-        return None
 
-    # Reconstruye el objeto de credenciales
-    credentials = google_auth_oauthlib.flow.credentials.Credentials(**credentials_data)
-
-    # Construye y devuelve el objeto de servicio de YouTube
-    return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
 """
 def profile_view(request):
@@ -69,7 +47,9 @@ def profile_view(request):
 
 def profile_view(request):
     try:
-        youtube = get_authenticated_service()
+        print(f"VISTA 'user_info': Usuario logueado: {request.user.username}")
+        print(f"VISTA 'user_info': ¿Está autenticado? {request.user.is_authenticated}")
+        youtube = get_youtube_service(request.user)
         print("Autenticación exitosa. Obteniendo tus suscripciones...")
         # Obtiene la lista de suscripciones del usuario y los detalles de los canales
         subscriptions_list = get_subscriptions_with_details(youtube)

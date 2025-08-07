@@ -20,5 +20,8 @@ from django.urls import include, path
 urlpatterns = [
     path("polls/", include("polls.urls")),
     path("yt/", include("ytProfile.urls")),
+    path("auth/", include("authentication.urls")),
+    path('accounts/', include('allauth.urls')),
+    path("", include("myApp.urls")), # Página de inicio
     path('admin/', admin.site.urls),
 ]
