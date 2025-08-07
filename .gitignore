@@ -106,3 +106,4 @@ ENV/
 
 .json
 TPI/authentication/client_secret.json
+TPI/db.sqlite3
