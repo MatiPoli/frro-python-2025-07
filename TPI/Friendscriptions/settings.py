@@ -80,7 +80,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Friendscriptions.wsgi.application'
 
 # Allauth configuration 
-SITE_ID = 1 
+SITE_ID = 2
 
 AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
