@@ -81,6 +81,9 @@ WSGI_APPLICATION = 'Friendscriptions.wsgi.application'
 # Allauth configuration 
 SITE_ID = 2
 
+ACCOUNT_LOGOUT_CONFIRMATION_ANONYMOUS_USER = False
+ACCOUNT_LOGOUT_ON_GET = True
+
 AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]

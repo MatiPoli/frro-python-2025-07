@@ -85,6 +85,31 @@ body {
     margin-right: 16px; /* Espacio entre el círculo y el texto */
 }
 
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #4285F4;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin: 8px 16px 8px 8px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 /* --- AJUSTE AL ICONO SVG --- */
 .google-icon {
     width: 28px;  /* Hacemos el icono un poco más grande */
