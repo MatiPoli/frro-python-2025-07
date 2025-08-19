@@ -56,6 +56,11 @@
                 {% for sub in subscriptions %}
                     <li class="p-3 bg-white rounded-lg shadow-sm hover:bg-gray-100 transition-colors duration-200 flex items-center">
                         <span class="font-bold text-blue-400 mr-3">{{ forloop.counter }}.</span>
+                        {% if sub.thumbnail_url %}
+                            <img src="{{ sub.thumbnail_url }}" alt="Foto canal" class="w-10 h-10 rounded-full mr-3 border border-gray-300" />
+                        {% else %}
+                            <span class="w-10 h-10 mr-3 rounded-full bg-gray-200 flex items-center justify-center text-gray-400">?</span>
+                        {% endif %}
                         <span>{{ sub.title }} <span class="text-sm text-gray-400">({{ sub.topic }})</span></span>
                     </li>
                 {% endfor %}

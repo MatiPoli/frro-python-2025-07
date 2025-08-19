@@ -1,3 +1,32 @@
+def poblar_categorias_youtube(request):
+    """
+    esto es una funcioncita q use una vez para meter las categorias
+    se accede por una url yt/poblar-categorias/
+    igual por alguna razon me crea solo 12
+    Pobla la tabla Categoria con todas las categorías oficiales de YouTube usando la API y la autenticación del usuario.
+    """
+    if not request.user.is_authenticated:
+        return HttpResponse("No autenticado", status=401)
+    from .models import Categoria
+    youtube = get_youtube_service(request.user)
+    try:
+        response = youtube.videoCategories().list(
+            part='snippet',
+            regionCode='AR'
+        ).execute()
+        creadas = 0
+        for item in response.get('items', []):
+            if item['snippet'].get('assignable', False):
+                cat_id = item['id']
+                title = item['snippet']['title']
+                obj, created = Categoria.objects.get_or_create(id=cat_id, defaults={'tematica': title})
+                if created:
+                    creadas += 1
+        return HttpResponse(f"Categorías creadas: {creadas}")
+    except Exception as e:
+        return HttpResponse(f"Error: {e}", status=500)
+    
+
 # profile_views.py
 import os
 import google_auth_oauthlib.flow
@@ -51,27 +80,66 @@ def profile_view(request):
     try:
         #return render(request, 'profile2.html')
         youtube = get_youtube_service(request.user)
+        from .models import Categoria, Canal, Subscription
 
         subscriptions_list = get_subscriptions_with_details(youtube)
 
-        # Calcula la distribución de las suscripciones por categoría
-        topic_distribution = calculate_topic_distribution(subscriptions_list)
+        # Poblar la base de datos con las suscripciones del usuario
+        for sub in subscriptions_list:
+            # Categoria
+            categoria_obj, _ = Categoria.objects.get_or_create(tematica=sub['topic'])
+            # Canal: obtener thumbnail_url si está disponible en sub
+            thumbnail_url = sub.get('thumbnail_url')
+            canal_obj, created = Canal.objects.get_or_create(
+                idCanal=sub['channel_id'],
+                defaults={
+                    'nombreCanal': sub['title'],
+                    'categoria': categoria_obj,
+                    'thumbnail_url': thumbnail_url
+                }
+            )
+            # Si el canal ya existe pero no tiene thumbnail_url, actualizarlo
+            if not canal_obj.thumbnail_url and thumbnail_url:
+                canal_obj.thumbnail_url = thumbnail_url
+                canal_obj.save()
+            # Actualizar categoria si el canal ya existe pero no tiene
+            if canal_obj.categoria is None:
+                canal_obj.categoria = categoria_obj
+                canal_obj.save()
+            # Subscription
+            Subscription.objects.get_or_create(
+                usuario=request.user,
+                canal=canal_obj
+            )
 
-        # Prepara los datos para el gráfico
+        # Obtener las suscripciones guardadas del usuario
+        subs_db = Subscription.objects.filter(usuario=request.user).select_related('canal__categoria')
+        subscriptions_render = [
+            {
+                'title': sub.canal.nombreCanal,
+                'topic': sub.canal.categoria.tematica if sub.canal.categoria else 'Sin categoría',
+                'thumbnail_url': sub.canal.thumbnail_url
+            }
+            for sub in subs_db
+        ]
+
+        # Calcular la distribución para el gráfico
+        from collections import Counter
+        topic_distribution = Counter([sub['topic'] for sub in subscriptions_render])
         chart_data = json.dumps([
             {'category': k, 'count': v} for k, v in topic_distribution.items()
         ])
 
-        # Datos de ejemplo para seguidores y seguidos (no disponibles en la API de YouTube)
+        # Datos de ejemplo para seguidores y seguidos (puedes conectar con el modelo Follow si lo deseas)
         followers_count = 10
         following_count = 15
 
         context = {
-            'username': 'Nombre de Usuario de Ejemplo', # Reemplazar con el nombre de usuario real
+            'username': request.user.username,
             'followers_count': followers_count,
             'following_count': following_count,
-            'subscriptions_count': len(subscriptions_list),
-            'subscriptions': subscriptions_list,
+            'subscriptions_count': subs_db.count(),
+            'subscriptions': subscriptions_render,
             'topic_distribution': chart_data,
         }
 
@@ -125,10 +193,20 @@ def get_subscriptions_with_details(youtube_service):
                 # Formatea el nombre de la categoría para que sea más legible
                 primary_topic = topics[0].split('/')[-1] if topics else 'Sin categoría'
 
+                # Obtener la foto de perfil del canal (miniatura)
+                thumbnails = channel_details.get('snippet', {}).get('thumbnails', {})
+                thumbnail_url = None
+                # Preferir 'default', luego 'medium', luego 'high'
+                for key in ['default', 'medium', 'high']:
+                    if key in thumbnails:
+                        thumbnail_url = thumbnails[key]['url']
+                        break
+
                 subscriptions.append({
                     'title': item['snippet']['title'],
                     'channel_id': channel_id,
-                    'topic': primary_topic
+                    'topic': primary_topic,
+                    'thumbnail_url': thumbnail_url
                 })
 
         next_page_token = response.get('nextPageToken')
