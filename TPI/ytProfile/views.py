@@ -49,7 +49,7 @@ def profile_view(request):
     if not request.user.is_authenticated:
         return redirect('login')
     try:
-        return render(request, 'profile2.html')
+        #return render(request, 'profile2.html')
         youtube = get_youtube_service(request.user)
 
         subscriptions_list = get_subscriptions_with_details(youtube)
@@ -75,7 +75,7 @@ def profile_view(request):
             'topic_distribution': chart_data,
         }
 
-        return render(request, 'profile.html', context)
+        return render(request, 'profile2.html', context)
 
     except HttpError as e:
         print(f"Error de HTTP: {e.resp.status}")
