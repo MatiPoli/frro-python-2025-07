@@ -91,7 +91,10 @@ AUTHENTICATION_BACKENDS = [
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': ['profile','email','https://www.googleapis.com/auth/youtube.readonly',],
-         'AUTH_PARAMS': {'access_type': 'offline'},
+         'AUTH_PARAMS': {
+             'access_type': 'offline',
+             'prompt': 'consent'
+                         },
         'METHOD': 'oauth2',
         'VERIFIED_EMAIL': True,
     }
@@ -100,6 +103,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_STORE_TOKENS = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

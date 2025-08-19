@@ -103,6 +103,34 @@ body {
     margin: 8px 16px 8px 8px;
 }
 
+.button:hover {
+    background-color: #357ae8;
+    transform: translateY(-2px);
+}
+
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin: 8px 16px 8px 8px;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
 .button-container {
     display: flex;
     flex-direction: row;
@@ -167,3 +195,6 @@ body {
     color: #888;
 }
 
+.unselectable {
+    user-select: none;
+}

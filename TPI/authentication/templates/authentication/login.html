@@ -29,7 +29,7 @@
                 {% if user.is_authenticated %}
                 <div class="button-container">
                     <a href="/yt/profile/" class="button">Ir a mi perfil</a>
-                    <a href="{% url 'account_logout' %}" class="button">Cerrar sesión</a>
+                    <a href="{% url 'account_logout' %}" class="logout-btn">Cerrar sesión</a>
                 </div>
                 {% else %}
                     <a href="{% provider_login_url 'google' %}" class="google-btn">

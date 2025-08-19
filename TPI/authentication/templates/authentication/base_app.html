@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{% block title %}FriendScriptions{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'css/base_app.css' %}">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <header class="app-header">
+            <a href="/" class="logo">FriendScriptions</a>
+        </header>
+
+        <div class="content-card">
+            
+            <nav class="card-nav">
+                <a href="/" class="nav-btn home-btn">Ir a Home</a>
+                <a href="{% url 'account_logout' %}" class="nav-btn logout-btn">Cerrar Sesión</a>
+            </nav>
+
+            <main class="card-content">
+                {% block content %}
+                {% endblock %}
+            </main>
+
+        </div>
+    </div>
+
+</body>
+</html>

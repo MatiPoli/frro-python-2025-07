@@ -1,0 +1,24 @@
+<!-- Le decimos a Django que herede de nuestra nueva plantilla base -->
+{% extends 'authentication/base_app.html' %}
+
+<!-- Opcional: Cambiamos el título de la página -->
+{% block title %}Mi Perfil - FriendScriptions{% endblock %}
+
+
+<!-- Ponemos el contenido específico de esta página dentro del bloque 'content' -->
+{% block content %}
+    
+    <h1 style="text-align: center; color: #2c3e50; margin-bottom: 30px;">
+        Mi Perfil
+    </h1>
+
+    <div style="font-size: 1.2rem; text-align: center; line-height: 1.6;">
+        <p>¡Hola, {{ user.username }}!</p>
+        <p>
+            Esta página mostrará el resumen de tu perfil, tus contadores de seguidores/seguidos
+            y el gráfico con la distribución de tus suscripciones.
+        </p>
+        <p><em>(Contenido a desarrollar)</em></p>
+    </div>
+
+{% endblock %}

@@ -49,6 +49,7 @@ def profile_view(request):
     if not request.user.is_authenticated:
         return redirect('login')
     try:
+        return render(request, 'profile2.html')
         youtube = get_youtube_service(request.user)
 
         subscriptions_list = get_subscriptions_with_details(youtube)

@@ -1,0 +1,110 @@
+/* --- ESTILOS PARA LA PLANTILLA BASE DE LA APP --- */
+
+/* Aseguramos que el body tenga el color de fondo correcto */
+body {
+    background-color: #f4f7f6;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Un contenedor para centrar todo el contenido de la app */
+.app-wrapper {
+    max-width: 1000px;
+    margin: 40px auto; /* Centra el contenedor y le da espacio arriba/abajo */
+    padding: 20px;
+}
+
+/* El título de la app que va arriba */
+.app-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.app-header .logo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+/* La tarjeta blanca principal */
+.content-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    padding: 30px 40px;
+}
+
+/* La barra de navegación dentro de la tarjeta */
+.card-nav {
+    display: flex;
+    justify-content: space-between; /* Botones a los extremos */
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e0e0e0; /* Línea divisoria sutil */
+}
+
+/* Estilo general para los botones de la barra de navegación */
+.card-nav .nav-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+/* Botón de "Ir a Home" (estilo secundario) */
+.card-nav .home-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #4285F4;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card-nav .home-btn:hover {
+    background-color: #357ae8;
+}
+
+/* Botón de "Cerrar Sesión" (estilo de peligro/salida) */
+.card-nav .logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card-nav .logout-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Espacio para el contenido principal */
+.card-content {
+    /* Aquí irán los estilos para el contenido específico de cada página si es necesario */
+    color: #333;
+}
+
+.unselectable {
+    user-select: none;
+}
