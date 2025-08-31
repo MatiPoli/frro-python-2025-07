@@ -6,6 +6,4 @@ urlpatterns = [
     # URL para la página de perfil del usuario
     path('profile/', views.profile_view, name='profile_view'),
     path('error/',views.error_view, name='error_page')
-    ,
-    path('poblar-categorias/', views.poblar_categorias_youtube, name='poblar_categorias_youtube')
 ]

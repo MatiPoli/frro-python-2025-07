@@ -1,0 +1,76 @@
+from ytProfile.models import Categoria
+from django.db import transaction
+
+CATEGORIAS = [
+    ("/m/04rlf", "Música (tema principal)"),
+    ("/m/02mscn", "música cristiana"),
+    ("/m/0ggq0m", "Música clásica"),
+    ("/m/01lyv", "País"),
+    ("/m/02lkt", "Música electrónica"),
+    ("/m/0glt670", "Música hip hop"),
+    ("/m/05rwpb", "Música independiente"),
+    ("/m/03_d0", "Jazz"),
+    ("/m/028sqc", "Música de Asia"),
+    ("/m/0g293", "Música de Latinoamérica"),
+    ("/m/064t9", "Música pop"),
+    ("/m/06cqb", "Reggae"),
+    ("/m/06j6l", "R&B"),
+    ("/m/06by7", "Música rock"),
+    ("/m/0gywn", "Soul"),
+    ("/m/0bzvm2", "Videojuegos (tema principal)"),
+    ("/m/025zzc", "Juego de acción"),
+    ("/m/02ntfj", "Juego de acción y aventura"),
+    ("/m/0b1vjn", "Juego casual"),
+    ("/m/02hygl", "Videojuego de música"),
+    ("/m/04q1x3q", "Videojuego de rompecabezas"),
+    ("/m/01sjng", "Videojuego de carreras"),
+    ("/m/0403l3g", "Videojuego de rol"),
+    ("/m/021bp2", "Videojuego de simulación"),
+    ("/m/022dc6", "Partido deportivo"),
+    ("/m/03hfrm", "Videojuego de estrategia"),
+    ("/m/06ntj", "Deportes (tema superior)"),
+    ("/m/0jm", "Fútbol americano"),
+    ("/m/018jz", "Béisbol"),
+    ("/m/018w8", "Básquetbol"),
+    ("/m/01cgz", "Boxeo"),
+    ("/m/09xp_", "Críquet"),
+    ("/m/02vx4", "Fútbol americano"),
+    ("/m/037hz", "Golf"),
+    ("/m/03tmr", "Hockey sobre hielo"),
+    ("/m/01h7lh", "Artes marciales mixtas"),
+    ("/m/0410tth", "Deportes de motor"),
+    ("/m/07bs0", "Tenis"),
+    ("/m/07_53", "Voleibol"),
+    ("/m/02jjt", "Entretenimiento (tema principal)"),
+    ("/m/09kqc", "Humor"),
+    ("/m/02vxn", "Películas"),
+    ("/m/05qjc", "Artes escénicas"),
+    ("/m/066wd", "Lucha libre profesional"),
+    ("/m/0f2f9", "Programas de TV"),
+    ("/m/019_rr", "Estilo de vida (tema superior)"),
+    ("/m/032tl", "Moda"),
+    ("/m/027x7n", "Fitness"),
+    ("/m/02wbm", "Comida"),
+    ("/m/03glg", "Pasatiempo"),
+    ("/m/068hy", "Mascotas"),
+    ("/m/041xxh", "Atractivo físico [Belleza]"),
+    ("/m/07c1v", "Tecnología"),
+    ("/m/07bxq", "Turismo"),
+    ("/m/07yv9", "Vehículos"),
+    ("/m/098wr", "Sociedad (tema superior)"),
+    ("/m/09s1f", "Empresa"),
+    ("/m/0kt51", "Salud"),
+    ("/m/01h6rj", "Militar"),
+    ("/m/05qt0", "Política"),
+    ("/m/06bvp", "Religión"),
+    ("/m/01k8wb", "Conocimiento"),
+]
+
+@transaction.atomic
+def cargar_categorias():
+    for idCategoria, tematica in CATEGORIAS:
+        Categoria.objects.get_or_create(idCategoria=idCategoria, defaults={"tematica": tematica})
+    print("Categorías cargadas correctamente.")
+
+if __name__ == "__main__":
+    cargar_categorias()

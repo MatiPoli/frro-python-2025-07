@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Categoria(models.Model):
+	idCategoria = models.CharField(max_length=50, unique=True)
 	tematica = models.CharField(max_length=100)
 
 	def __str__(self):
@@ -10,7 +11,7 @@ class Categoria(models.Model):
 class Canal(models.Model):
 	idCanal = models.CharField(max_length=100, unique=True)
 	nombreCanal = models.CharField(max_length=255)
-	categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, related_name='canales')
+	categorias = models.ManyToManyField(Categoria, related_name='canales')
 	thumbnail_url = models.URLField(max_length=500, blank=True, null=True)
 
 	def __str__(self):
@@ -24,7 +25,6 @@ class Subscription(models.Model):
 	def __str__(self):
 		return f"{self.usuario.username} suscripto a {self.canal.nombreCanal}"
 
-# Relación de seguidores entre usuarios
 class Follow(models.Model):
 	seguidor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='siguiendo')
 	seguido = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seguidores')
