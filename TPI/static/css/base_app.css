@@ -1,3 +1,29 @@
+/* Dark gray button for actions */
+.dark-btn {
+    background-color: #333;
+    color: #fff;
+    font-size: 0.9rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.dark-btn:hover {
+    background-color: #222;
+}
+/* Red button for logout */
+.red-btn {
+    background-color: #e74c3c;
+    hover {
+        background-color: #c0392b;
+    }
+}
 /* --- ESTILOS PARA LA PLANTILLA BASE DE LA APP --- */
 
 /* Aseguramos que el body tenga el color de fondo correcto */
@@ -78,15 +104,16 @@ body {
 }
 
 /* Botón de "Cerrar Sesión" (estilo de peligro/salida) */
-.card-nav .logout-btn {
+/* Global nav-btn styles for all buttons */
+
+.nav-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 8px 20px;
     font-size: 1.1rem;
     font-weight: 600;
     color: #fff;
-    background-color: #e74c3c;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -95,8 +122,17 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.card-nav .logout-btn:hover {
-    background-color: #c0392b;
+
+.nav-btn:not(.red-btn):not(.green-btn):hover {
+    background-color: #357ae8;
+}
+
+/* Green button for Seguidos */
+.green-btn {
+    background-color: #22c55e;
+}
+.green-btn:hover {
+    background-color: #16a34a;
 }
 
 /* Espacio para el contenido principal */

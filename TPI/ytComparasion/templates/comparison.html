@@ -1,0 +1,95 @@
+{% extends 'authentication/base_app.html' %}
+{% load static %}
+
+{% block title %}Comparando Perfiles{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/comparison.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="comparison-container">
+    <div class="comparison-header">
+        <!-- Nombres de usuario pasados desde la vista -->
+        <h2>Comparando <span class="username-highlight">{{ request.user.username }}</span> y <span class="username-highlight">{{ friend.username }}</span></h2>
+        <p>Un análisis de sus gustos en YouTube.</p>
+    </div>
+
+    <!-- Grillas para las barras de cada usuario -->
+    <div class="comparison-grid">
+        <!-- Perfil del Usuario Actual -->
+        <div class="user-profile-card">
+            <h3>Tus Suscripciones</h3>
+            <div class="category-bar" title="Distribución de tus suscripciones por categoría">
+                <!-- Los segmentos se generan dinámicamente -->
+                {% for cat in user_categories %}
+                    <div class="category-segment" style="width: {{ cat.percentage }}%; background-color: {{ cat.color }};">{{ cat.percentage }}%</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Perfil del Amigo -->
+        <div class="user-profile-card">
+            <h3>Suscripciones de {{ friend.username }}</h3>
+            <div class="category-bar" title="Distribución de las suscripciones de {{ friend.username }} por categoría">
+                <!-- Los segmentos se generan dinámicamente -->
+                {% for cat in friend_categories %}
+                    <div class="category-segment" style="width: {{ cat.percentage }}%; background-color: {{ cat.color }};">{{ cat.percentage }}%</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Leyenda de colores -->
+    <ul class="legend">
+        <!-- La leyenda también se genera dinámicamente -->
+        {% for item in legend %}
+             <li class="legend-item">
+                <span class="legend-color-box" style="background-color: {{ item.color }};"></span>{{ item.name }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Resultado de Compatibilidad -->
+    <div class="compatibility-section">
+        <h3>Nivel de Compatibilidad</h3>
+        <div class="compatibility-meter">
+            <!-- El 'width' se establece dinámicamente con el resultado del algoritmo -->
+            <div id="compatibility-fill" class="compatibility-bar"></div>
+        </div>
+        <div id="compatibility-score" class="compatibility-score">0%</div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // El valor de compatibilidad se pasa desde la vista de Django.
+    // Usamos 'default:0' como medida de seguridad por si la variable no existiera.
+    const compatibilityPercentage = {{ compatibility|default:0 }};
+
+    const compatibilityFill = document.getElementById('compatibility-fill');
+    const compatibilityScore = document.getElementById('compatibility-score');
+
+    // Pequeño retraso para que la animación se perciba mejor al cargar la página
+    setTimeout(() => {
+        // Asigna el ancho final a la barra de compatibilidad
+        compatibilityFill.style.width = compatibilityPercentage + '%';
+        
+        // Animación del contador de porcentaje
+        let currentScore = 0;
+        const interval = setInterval(() => {
+            if (currentScore >= compatibilityPercentage) {
+                clearInterval(interval);
+                // Aseguramos que el número final sea exacto
+                compatibilityScore.textContent = compatibilityPercentage + '%';
+            } else {
+                currentScore++;
+                compatibilityScore.textContent = currentScore + '%';
+            }
+        }, 15); // La velocidad de la animación del número en milisegundos
+    }, 200);
+});
+</script>
+
+{% endblock %}

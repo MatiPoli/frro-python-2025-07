@@ -1,0 +1,144 @@
+ .comparison-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .comparison-header h2 {
+        font-size: 1.8rem;
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    
+    .comparison-header .username-highlight {
+        color: #4285F4;
+    }
+
+    .comparison-header p {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    .comparison-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .user-profile-card {
+        padding: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+    }
+
+    .user-profile-card h3 {
+        font-size: 1.3rem;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* --- BARRA DE CATEGORÍAS --- */
+    .category-bar {
+        display: flex;
+        width: 100%;
+        height: 40px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-bottom: 15px;
+    }
+
+    .category-segment {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: white;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        transition: filter 0.2s ease;
+        position: relative; /* Para el tooltip */
+    }
+
+    .category-segment:hover {
+        filter: brightness(1.1);
+        cursor: pointer;
+    }
+
+    /* --- LEYENDA DE COLORES --- */
+    .legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+    }
+
+    .legend-color-box {
+        width: 15px;
+        height: 15px;
+        border-radius: 4px;
+        margin-right: 8px;
+    }
+    
+    /* --- COLORES PARA LAS CATEGORÍAS (Ejemplo) --- */
+    .cat-color-1 { background-color: #E74C3C; } /* Rojo */
+    .cat-color-2 { background-color: #E67E22; } /* Naranja */
+    .cat-color-3 { background-color: #3498DB; } /* Azul */
+    .cat-color-4 { background-color: #9B59B6; } /* Morado */
+    .cat-color-5 { background-color: #2ECC71; } /* Verde */
+    .cat-color-6 { background-color: #F1C40F; } /* Amarillo */
+    .cat-color-7 { background-color: #1ABC9C; } /* Turquesa */
+    .cat-color-8 { background-color: #34495E; } /* Gris oscuro */
+
+
+    /* --- SECCIÓN DE COMPATIBILIDAD --- */
+    .compatibility-section {
+        text-align: center;
+        padding: 30px;
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        margin-top: 20px;
+    }
+
+    .compatibility-section h3 {
+        font-size: 1.6rem;
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    .compatibility-meter {
+        width: 100%;
+        max-width: 400px;
+        height: 25px;
+        background-color: #e0e0e0;
+        border-radius: 25px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
+    .compatibility-bar {
+        width: 0%; /* Se llenará con el % de compatibilidad */
+        height: 100%;
+        border-radius: 25px;
+        background: linear-gradient(90deg, #3498DB, #2ECC71);
+        transition: width 1s ease-out;
+    }
+    
+    .compatibility-score {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-top: 15px;
+        color: #2c3e50;
+    }

@@ -1,0 +1,31 @@
+{% extends 'authentication/base_app.html' %}
+{% block content %}
+<div class="max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mt-8">
+    <div class="flex items-center mb-4">
+        {% if thumbnail_url %}
+            <img src="{{ thumbnail_url }}" alt="Logo canal" class="w-20 h-20 rounded-full mr-4">
+        {% endif %}
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ title }}</h2>
+            <p class="text-gray-600 dark:text-gray-300">ID: {{ canal_id }}</p>
+        </div>
+    </div>
+    <div class="mb-4">
+        <p class="text-gray-700 dark:text-gray-200"><strong>Descripción:</strong> {{ description }}</p>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <span class="block text-gray-500 dark:text-gray-400">Suscriptores</span>
+            <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ subscriber_count|default:"N/A" }}</span>
+        </div>
+        <div>
+            <span class="block text-gray-500 dark:text-gray-400">Videos</span>
+            <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ video_count|default:"N/A" }}</span>
+        </div>
+        <div>
+            <span class="block text-gray-500 dark:text-gray-400">Vistas totales</span>
+            <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ view_count|default:"N/A" }}</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
