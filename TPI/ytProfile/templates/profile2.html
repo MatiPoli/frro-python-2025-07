@@ -1,9 +1,7 @@
 <!-- Le decimos a Django que herede de nuestra nueva plantilla base -->
 {% extends 'authentication/base_app.html' %}
 
-<!-- Opcional: Cambiamos el título de la página -->
 {% block title %}Mi Perfil - FriendScriptions{% endblock %}
-
 
 <!-- Ponemos el contenido específico de esta página dentro del bloque 'content' -->
 {% block content %}
@@ -66,15 +64,12 @@
                 {% endfor %}
             </ol>
         </section>
-        <!-- Gráfico de distribución de suscripciones -->
+        <!-- Gráfico de distribución de suscripciones (solo pie chart, más grande) -->
         <section class="bg-gray-50 p-6 rounded-xl shadow-md w-full mt-8">
             <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Distribución de Suscripciones</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div id="chart-container" class="h-80 w-full">
-                    <svg id="bar-chart" class="w-full h-full"></svg>
-                </div>
-                <div id="pie-chart-container" class="h-80 w-full flex items-center justify-center">
-                    <svg id="pie-chart" width="320" height="320"></svg>
+            <div class="flex items-center justify-center">
+                <div id="pie-chart-container" class="h-[480px] w-[480px] flex items-center justify-center">
+                    <svg id="pie-chart" width="440" height="440"></svg>
                 </div>
             </div>
         </section>
@@ -91,63 +86,17 @@
                 return;
             }
 
-            // Bar chart
-            const margin = {top: 20, right: 20, bottom: 60, left: 60};
-            const container = d3.select("#bar-chart");
-            const containerWidth = parseInt(container.style("width")) - margin.left - margin.right;
-            const containerHeight = parseInt(container.style("height")) - margin.top - margin.bottom;
 
-            const svg = container.append("g")
-                .attr("transform", `translate(${margin.left}, ${margin.top})`);
-            
-            const x = d3.scaleBand()
-                .range([0, containerWidth])
-                .padding(0.1)
-                .domain(chartData.map(d => d.category));
 
-            const y = d3.scaleLinear()
-                .range([containerHeight, 0])
-                .domain([0, d3.max(chartData, d => d.count)]);
 
-            // Barras del gráfico
-            svg.selectAll(".bar")
-                .data(chartData)
-                .enter().append("rect")
-                .attr("class", "bar")
-                .attr("x", d => x(d.category))
-                .attr("y", d => y(d.count))
-                .attr("width", x.bandwidth())
-                .attr("height", d => containerHeight - y(d.count))
-                .attr("fill", "#3b82f6");
-
-            // Eje X
-            svg.append("g")
-                .attr("transform", `translate(0, ${containerHeight})`)
-                .call(d3.axisBottom(x))
-                .selectAll("text")
-                .attr("transform", "rotate(-45)")
-                .style("text-anchor", "end");
-
-            // Eje Y
-            svg.append("g")
-                .call(d3.axisLeft(y));
-            
-            // Etiqueta para el Eje Y
-            svg.append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 0 - margin.left + 5)
-                .attr("x", 0 - (containerHeight / 2))
-                .attr("dy", "1em")
-                .style("text-anchor", "middle")
-                .text("Número de Suscripciones");
-
-            // Pie chart
-            const pieWidth = 320, pieHeight = 320, pieRadius = Math.min(pieWidth, pieHeight) / 2 - 10;
+            // Pie chart (bigger)
+            const pieWidth = 440, pieHeight = 440, pieRadius = Math.min(pieWidth, pieHeight) / 2 - 20;
             const pieSvg = d3.select("#pie-chart")
                 .attr("width", pieWidth)
                 .attr("height", pieHeight)
                 .append("g")
                 .attr("transform", `translate(${pieWidth / 2},${pieHeight / 2})`);
+
 
             const color = d3.scaleOrdinal()
                 .domain(chartData.map(d => d.category))

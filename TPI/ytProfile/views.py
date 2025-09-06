@@ -34,10 +34,11 @@ def profile_view(request):
         subs_db = Subscription.objects.filter(usuario=request.user).select_related('canal').prefetch_related('canal__categorias')
         subscriptions_render = []
         all_topics = []
+        import re
         for sub in subs_db:
             categorias = list(sub.canal.categorias.all())
             if categorias:
-                topics = [cat.tematica for cat in categorias]
+                topics = [re.sub(r"\s*\(.*?\)", "", cat.tematica).strip() for cat in categorias]
                 all_topics.extend(topics)
                 topic_str = ', '.join(topics)
             else:
@@ -49,13 +50,29 @@ def profile_view(request):
                 'thumbnail_url': sub.canal.thumbnail_url
             })
 
-        topic_distribution = Counter(all_topics)
-        chart_data = json.dumps([
-            {'category': k, 'count': v} for k, v in topic_distribution.items()
-        ])
 
-        followers_count = 10
-        following_count = 15
+        topic_distribution = Counter(all_topics)
+        total = sum(topic_distribution.values())
+        chart_data_list = []
+        otras_count = 0
+        import re
+        for k, v in topic_distribution.items():
+            # Eliminar todo lo que esté entre paréntesis y espacios extra
+            main_cat = re.sub(r"\s*\(.*?\)", "", k).strip()
+            percent = (v / total) * 100 if total > 0 else 0
+            if percent < 3:
+                otras_count += v
+            else:
+                chart_data_list.append({'category': main_cat, 'count': v})
+        if otras_count > 0:
+            chart_data_list.append({'category': 'Otras', 'count': otras_count})
+        chart_data = json.dumps(chart_data_list)
+
+
+
+        from ytProfile.models import Follow
+        followers_count = Follow.objects.filter(seguido=request.user).count()
+        following_count = Follow.objects.filter(seguidor=request.user).count()
 
         context = {
             'username': request.user.username,
