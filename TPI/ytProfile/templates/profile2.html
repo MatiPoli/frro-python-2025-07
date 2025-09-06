@@ -25,29 +25,32 @@
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
 
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl p-8">
-        <header class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-gray-800">{{ username }}</h1>
-            <p class="text-gray-500 text-lg mt-2">Tu perfil de FriendScriptions</p>
+        <h2 class="text-4xl font-bold text-gray-700 text-center mb-8">Tu Perfil de FriendScriptions</h2>
+        <header class="grid grid-cols-2 gap-8 mb-10">
+            <div class="flex flex-col items-center justify-center h-full">
+                {% if google_photo %}
+                    <img src="{{ google_photo }}" alt="Foto de perfil" class="w-56 h-56 rounded-full shadow-lg border-4 border-gray-300 object-cover" />
+                {% endif %}
+                <h1 class="text-3xl font-bold text-gray-800 mt-4">{{ username }}</h1>
+            </div>
+            <div class="flex flex-col items-center justify-center h-full">
+                <div class="bg-blue-50 p-4 rounded-xl shadow-inner border border-blue-200 mb-3 w-40 text-center">
+                    <p class="text-3xl font-bold text-blue-600">{{ following_count }}</p>
+                    <p class="text-gray-600 mt-2">Seguidos</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-xl shadow-inner border border-purple-200 mb-3 w-40 text-center">
+                    <p class="text-3xl font-bold text-purple-600">{{ followers_count }}</p>
+                    <p class="text-gray-600 mt-2">Seguidores</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-xl shadow-inner border border-green-200 w-40 text-center">
+                    <p class="text-3xl font-bold text-green-600">{{ subscriptions_count }}</p>
+                    <p class="text-gray-600 mt-2">Suscripciones</p>
+                </div>
+            </div>
         </header>
 
-        <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center mb-12">
-            <div class="bg-blue-50 p-6 rounded-xl shadow-inner border border-blue-200">
-                <p class="text-3xl font-bold text-blue-600">{{ following_count }}</p>
-                <p class="text-gray-600 mt-2">Seguidos</p>
-            </div>
-            <div class="bg-purple-50 p-6 rounded-xl shadow-inner border border-purple-200">
-                <p class="text-3xl font-bold text-purple-600">{{ followers_count }}</p>
-                <p class="text-gray-600 mt-2">Seguidores</p>
-            </div>
-            <div class="bg-green-50 p-6 rounded-xl shadow-inner border border-green-200">
-                <p class="text-3xl font-bold text-green-600">{{ subscriptions_count }}</p>
-                <p class="text-gray-600 mt-2">Suscripciones</p>
-            </div>
-        </section>
         
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Sección de suscripciones: ocupa todo el ancho -->
-        </div>
+        
         <section class="bg-gray-50 p-6 rounded-xl shadow-md w-full mt-8">
             <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Lista de Suscripciones</h2>
             <ol class="h-96 overflow-y-scroll space-y-2 text-gray-600">

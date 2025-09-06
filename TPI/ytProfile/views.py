@@ -26,6 +26,12 @@ def error_view(request):
     return render(request, 'error.html')
 
 def profile_view(request):
+    # Obtener foto de Google del usuario
+    from allauth.socialaccount.models import SocialAccount
+    google_account = SocialAccount.objects.filter(user=request.user, provider='google').first()
+    google_photo = None
+    if google_account and 'picture' in google_account.extra_data:
+        google_photo = google_account.extra_data['picture']
     if not request.user.is_authenticated:
         return redirect('login')
     try:
@@ -50,7 +56,6 @@ def profile_view(request):
                 'thumbnail_url': sub.canal.thumbnail_url
             })
 
-
         topic_distribution = Counter(all_topics)
         total = sum(topic_distribution.values())
         chart_data_list = []
@@ -68,8 +73,6 @@ def profile_view(request):
             chart_data_list.append({'category': 'Otras', 'count': otras_count})
         chart_data = json.dumps(chart_data_list)
 
-
-
         from ytProfile.models import Follow
         followers_count = Follow.objects.filter(seguido=request.user).count()
         following_count = Follow.objects.filter(seguidor=request.user).count()
@@ -81,6 +84,7 @@ def profile_view(request):
             'subscriptions_count': subs_db.count(),
             'subscriptions': subscriptions_render,
             'topic_distribution': chart_data,
+            'google_photo': google_photo,
         }
 
         return render(request, 'profile2.html', context)
