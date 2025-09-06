@@ -32,3 +32,5 @@ class Follow(models.Model):
 
 	def __str__(self):
 		return f"{self.seguidor.username} sigue a {self.seguido.username}"
+
+# User --> username... (mail ?)

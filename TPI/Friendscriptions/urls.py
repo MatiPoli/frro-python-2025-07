@@ -23,6 +23,7 @@ from django.conf import settings
 urlpatterns = [
     path("polls/", include("polls.urls")),
     path("yt/", include("ytProfile.urls")),
+    path("ytfollowers/", include("ytFollowers.urls")),
     path("", include("authentication.urls")),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
