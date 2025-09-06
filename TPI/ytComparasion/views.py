@@ -100,7 +100,7 @@ def generate_color_palette(category_names):
     return palette
 
 # --- FUNCIÓN AUXILIAR 2: AGRUPAR CATEGORÍAS PEQUEÑAS ---
-def group_small_categories(category_percentages, threshold=2.0):
+def group_small_categories(category_percentages, threshold=3.0):
     """
     Agrupa categorías cuyo porcentaje es menor que el umbral en una sola categoría "Otros".
     """
