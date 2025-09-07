@@ -40,22 +40,30 @@
             <div class="bg-blue-50 dark:bg-gray-900 rounded-lg shadow p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-blue-700 dark:text-blue-300 text-center">Usuarios que sigues</h2>
                 <div class="overflow-x-auto w-full">
-                    <table class="w-full border border-blue-300 dark:border-blue-700 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                        <table class="min-w-full bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md" style="width: 900px; max-width: 100%; border-collapse: collapse;">
                         <thead class="bg-blue-100 dark:bg-blue-900">
                             <tr>
-                                <th class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 text-left text-blue-700 dark:text-blue-300 font-semibold">#</th>
-                                <th class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 text-left text-blue-700 dark:text-blue-300 font-semibold">Usuario</th>
-                                <th class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 text-left text-blue-700 dark:text-blue-300 font-semibold">Email</th>
-                                <th class="py-3 px-6 text-left text-blue-700 dark:text-blue-300 font-semibold">Acción</th>
+                                
+                                <th class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 text-center text-blue-700 dark:text-blue-300 font-semibold">Foto</th>
+                                <th class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 text-center text-blue-700 dark:text-blue-300 font-semibold">Usuario</th>
+                                <th class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 text-center text-blue-700 dark:text-blue-300 font-semibold">Email</th>
+                                <th class="py-3 px-6 text-center text-blue-700 dark:text-blue-300 font-semibold">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for user in seguidos %}
-                            <tr class="border-b border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-800">
-                                <td class="py-3 px-6 border-r border-blue-200 dark:border-blue-800">{{ forloop.counter }}</td>
-                                <td class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 font-medium text-gray-800 dark:text-white">{{ user.username }}</td>
-                                <td class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 text-gray-600 dark:text-gray-300">{{ user.email }}</td>
-                                <td class="py-3 px-6">
+                            <tr class="hover:bg-blue-50 dark:hover:bg-blue-800">
+                                
+                                <td class="py-3 px-6" style="text-align: center;">
+                                    {% if user.google_photo %}
+                                        <img src="{{ user.google_photo }}" alt="Foto perfil" class="w-7 h-7 rounded-full inline-block border-2 border-gray-300 object-cover" style="aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover;" />
+                                    {% else %}
+                                        <span class="w-7 h-7 rounded-full bg-gray-200 inline-flex items-center justify-center text-gray-400 text-xs">?</span>
+                                    {% endif %}
+                                </td>
+                                <td class="py-3 px-6 font-medium text-gray-800 dark:text-white" style="text-align: center;">{{ user.username }}</td>
+                                <td class="py-3 px-6 text-gray-600 dark:text-gray-300" style="text-align: center;">{{ user.email }}</td>
+                                <td class="py-3 px-6" style="text-align: center;">
                                     <form method="post" action="" style="display:inline;">
                                         {% csrf_token %}
                                         <input type="hidden" name="unfollow_id" value="{{ user.id }}">

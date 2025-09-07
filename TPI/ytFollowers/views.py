@@ -9,7 +9,21 @@ def home(request):
     seguidos = []
     if request.user.is_authenticated:
         from ytProfile.models import Follow
-        seguidos = [f.seguido for f in Follow.objects.filter(seguidor=request.user)]
+        seguidos_objs = [f.seguido for f in Follow.objects.filter(seguidor=request.user)]
+        # Obtener foto de Google de cada seguido
+        from allauth.socialaccount.models import SocialAccount
+        seguidos = []
+        for seguido in seguidos_objs:
+            google_account = SocialAccount.objects.filter(user=seguido, provider='google').first()
+            google_photo = None
+            if google_account and 'picture' in google_account.extra_data:
+                google_photo = google_account.extra_data['picture']
+            seguidos.append({
+                'username': seguido.username,
+                'email': seguido.email,
+                'id': seguido.id,
+                'google_photo': google_photo,
+            })
 
     if query:
         results = User.objects.filter(username__icontains=query)

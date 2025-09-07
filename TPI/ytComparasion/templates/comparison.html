@@ -5,6 +5,43 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/comparison.css' %}">
+    <style>
+.vs-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid #bbb;
+    background: #fff;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    transform: scale(0.7);
+    opacity: 0;
+    animation: vsPhotoPop 0.7s cubic-bezier(.5,1.7,.5,1) forwards;
+}
+.vs-photo:first-child {
+    animation-delay: 0.1s;
+}
+.vs-photo:last-child {
+    animation-delay: 0.3s;
+}
+@keyframes vsPhotoPop {
+    0% {
+        transform: scale(0.7);
+        opacity: 0;
+        box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    60% {
+        transform: scale(1.1);
+        opacity: 1;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    }
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -16,6 +53,21 @@
         <p>Un análisis de sus gustos en YouTube.</p>
     </div>
 
+    <!-- FOTOS Y VERSUS ARRIBA DE LAS BARRAS -->
+    <div style="display: flex; align-items: center; justify-content: center; gap: 32px; margin-bottom: 32px;">
+    <img src="{{ request.user.socialaccount_set.first.extra_data.picture }}" alt="Tu foto" class="vs-photo"/>
+        <span style="font-size: 2.2rem; font-weight: bold; color: #888;">VS</span>
+    <img src="{{ friend.socialaccount_set.first.extra_data.picture }}" alt="Foto amigo" class="vs-photo"/>
+    </div>
+    <!-- Resultado de Compatibilidad -->
+    <div class="compatibility-section" style="margin-bottom: 32px;">
+        <h3>Nivel de Compatibilidad</h3>
+        <div class="compatibility-meter">
+            <!-- El 'width' se establece dinámicamente con el resultado del algoritmo -->
+            <div id="compatibility-fill" class="compatibility-bar"></div>
+        </div>
+        <div id="compatibility-score" class="compatibility-score">0%</div>
+    </div>
     <!-- Grillas para las barras de cada usuario -->
     <div class="comparison-grid">
         <!-- Perfil del Usuario Actual -->
@@ -51,15 +103,7 @@
         {% endfor %}
     </ul>
 
-    <!-- Resultado de Compatibilidad -->
-    <div class="compatibility-section">
-        <h3>Nivel de Compatibilidad</h3>
-        <div class="compatibility-meter">
-            <!-- El 'width' se establece dinámicamente con el resultado del algoritmo -->
-            <div id="compatibility-fill" class="compatibility-bar"></div>
-        </div>
-        <div id="compatibility-score" class="compatibility-score">0%</div>
-    </div>
+    
 </div>
 
 <script>
