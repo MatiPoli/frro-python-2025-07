@@ -96,9 +96,8 @@
                 .attr("transform", `translate(${pieWidth / 2},${pieHeight / 2})`);
 
 
-            const color = d3.scaleOrdinal()
-                .domain(chartData.map(d => d.category))
-                .range(d3.schemeCategory10);
+            // Usar el color definido en los datos
+            const color = d => d.data.color;
 
             const pie = d3.pie()
                 .value(d => d.count)
@@ -114,7 +113,7 @@
                     .innerRadius(0)
                     .outerRadius(pieRadius)
                 )
-                .attr('fill', d => color(d.data.category))
+                .attr('fill', color)
                 .attr('stroke', 'white')
                 .style('stroke-width', '2px')
                 .style('opacity', 0.8);

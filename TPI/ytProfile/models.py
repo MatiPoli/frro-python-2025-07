@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class Categoria(models.Model):
 	idCategoria = models.CharField(max_length=50, unique=True)
 	tematica = models.CharField(max_length=100)
+	color = models.CharField(max_length=7, default="#b0b0b0")  # Hex color, e.g. #ff0000
 
 	def __str__(self):
 		return self.tematica

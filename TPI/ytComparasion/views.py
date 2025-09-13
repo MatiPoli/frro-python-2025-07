@@ -54,16 +54,28 @@ def comparison_view(request, friend_username):
     friend_category_percentages = {cat: (count / (total_friend_cats or 1)) * 100 for cat, count in friend_category_counts.items()}
     
     # --- 4. Preparar datos para la plantilla (sin cambios) ---
+    from ytProfile.models import Categoria
     user_grouped_data = group_small_categories(user_category_percentages)
     friend_grouped_data = group_small_categories(friend_category_percentages)
-    
-    final_category_names = set(item['name'] for item in user_grouped_data) | set(item['name'] for item in friend_grouped_data)
-    category_colors = generate_color_palette(final_category_names)
-    if 'Otros' in category_colors: category_colors['Otros'] = '#b0b0b0'
 
-    for item in user_grouped_data: item['color'] = category_colors.get(item['name'])
-    for item in friend_grouped_data: item['color'] = category_colors.get(item['name'])
-    
+    # Obtener todos los nombres de categorías presentes
+    final_category_names = set(item['name'] for item in user_grouped_data) | set(item['name'] for item in friend_grouped_data)
+    category_colors = {}
+    for name in final_category_names:
+        if name == 'Otros':
+            category_colors[name] = '#b0b0b0'
+        else:
+            try:
+                cat_obj = Categoria.objects.get(tematica=name)
+                category_colors[name] = cat_obj.color
+            except Categoria.DoesNotExist:
+                category_colors[name] = '#b0b0b0'
+
+    for item in user_grouped_data:
+        item['color'] = category_colors.get(item['name'], '#b0b0b0')
+    for item in friend_grouped_data:
+        item['color'] = category_colors.get(item['name'], '#b0b0b0')
+
     legend_data = [{'name': name, 'color': category_colors[name]} for name in sorted(list(final_category_names))]
 
     context = {

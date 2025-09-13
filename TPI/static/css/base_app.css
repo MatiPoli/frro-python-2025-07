@@ -66,12 +66,17 @@ body {
 
 .card-nav {
     display: flex;
-    justify-content: space-between; /* Botones a los extremos */
     align-items: center;
+    gap: 10px;
     padding-bottom: 20px;
     margin-bottom: 30px;
     border-bottom: 1px solid #e0e0e0; /* Línea divisoria sutil */
 }
+
+.card-nav .nav-btn.red-btn {
+    margin-left: auto;
+}
+
 
 .nav-btn, .home-btn {
     color: #fff;
@@ -105,6 +110,20 @@ body {
 }
 .green-btn:hover {
     background-color: #16a34a;
+}
+
+.orange-btn {
+    background-color: #f59e42;
+}
+.orange-btn:hover {
+    background-color: #d97706;
+}
+
+.blue-btn {
+    background-color: #2563eb;
+}
+.blue-btn:hover {
+    background-color: #1e40af;
 }
 
 .card-content {

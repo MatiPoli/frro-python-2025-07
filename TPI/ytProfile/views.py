@@ -61,6 +61,7 @@ def profile_view(request):
         chart_data_list = []
         otras_count = 0
         import re
+        from ytProfile.models import Categoria
         for k, v in topic_distribution.items():
             # Eliminar todo lo que esté entre paréntesis y espacios extra
             main_cat = re.sub(r"\s*\(.*?\)", "", k).strip()
@@ -68,10 +69,19 @@ def profile_view(request):
             if percent < 2:
                 otras_count += v
             else:
-                chart_data_list.append({'category': main_cat, 'count': v})
+                # Buscar color en la BD
+                try:
+                    cat_obj = Categoria.objects.get(tematica=main_cat)
+                    print("DEBUG:", cat_obj)
+                    color = cat_obj.color
+                    
+                except Categoria.DoesNotExist:
+                    color = "#b0b0b0"
+                chart_data_list.append({'category': main_cat, 'count': v, 'color': color})
         if otras_count > 0:
-            chart_data_list.append({'category': 'Otras', 'count': otras_count})
-        chart_data = json.dumps(chart_data_list)
+            chart_data_list.append({'category': 'Otras', 'count': otras_count, 'color': '#b0b0b0'})
+  
+            chart_data = json.dumps(chart_data_list)
 
         from ytProfile.models import Follow
         followers_count = Follow.objects.filter(seguido=request.user).count()
