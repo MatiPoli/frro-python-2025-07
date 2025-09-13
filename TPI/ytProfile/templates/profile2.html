@@ -71,8 +71,8 @@
         <section class="bg-gray-50 p-6 rounded-xl shadow-md w-full mt-8">
             <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Distribución de Suscripciones</h2>
             <div class="flex items-center justify-center">
-                <div id="pie-chart-container" class="h-[480px] w-[480px] flex items-center justify-center">
-                    <svg id="pie-chart" width="440" height="440"></svg>
+                <div id="pie-chart-container" class="h-[500px] w-[800px] flex items-center justify-center">
+                    <svg id="pie-chart" width="800" height="500"></svg>
                 </div>
             </div>
         </section>
@@ -81,7 +81,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const chartData = {{ topic_distribution | safe }};
+            let chartData = JSON.parse('{{ topic_distribution|safe|escapejs }}');
+            // Ordenar por porcentaje ascendente para que las categorías pequeñas queden a la izquierda
+            chartData = chartData.slice().sort((a, b) => a.count - b.count);
 
             if (!chartData || chartData.length === 0) {
                 document.getElementById('chart-container').innerHTML = '<p class="text-center text-gray-500 mt-10">No hay datos de distribución disponibles.</p>';
@@ -93,7 +95,9 @@
 
 
             // Pie chart (bigger)
-            const pieWidth = 440, pieHeight = 440, pieRadius = Math.min(pieWidth, pieHeight) / 2 - 20;
+            const pieWidth = 800, pieHeight = 500;
+            const pieRadius = 150; // pieRadius fijo e independiente
+            const labelArc = d3.arc().innerRadius(pieRadius + 10).outerRadius(pieRadius + 10);
             const pieSvg = d3.select("#pie-chart")
                 .attr("width", pieWidth)
                 .attr("height", pieHeight)
@@ -106,7 +110,9 @@
                 .range(d3.schemeCategory10);
 
             const pie = d3.pie()
-                .value(d => d.count);
+                .value(d => d.count)
+                .startAngle(Math.PI / 2) // rotar 90 grados para que el inicio esté a la izquierda
+                .endAngle(2.5 * Math.PI); // mantener el rango de 2*PI
             const data_ready = pie(chartData);
 
             pieSvg.selectAll('path')
@@ -125,6 +131,22 @@
             // Etiquetas
             // Calcular el total para porcentajes
             const total = d3.sum(chartData, d => d.count);
+            // Etiquetas fuera del gráfico con líneas líderes
+            // Usar solo la versión ajustada de labelArc
+
+            pieSvg.selectAll('polyline')
+                .data(data_ready)
+                .enter()
+                .append('polyline')
+                .attr('points', d => {
+                    const posA = d3.arc().innerRadius(pieRadius).outerRadius(pieRadius).centroid(d); // punto en el borde
+                    const posB = labelArc.centroid(d); // punto fuera del gráfico
+                    return [posA, posB, [posB[0] + (posB[0] > 0 ? 20 : -20), posB[1]]];
+                })
+                .style('fill', 'none')
+                .style('stroke', '#333')
+                .style('stroke-width', '1px');
+
             pieSvg.selectAll('text')
                 .data(data_ready)
                 .enter()
@@ -134,10 +156,11 @@
                     return `${d.data.category} (${percent}%)`;
                 })
                 .attr('transform', d => {
-                    const pos = d3.arc().innerRadius(0).outerRadius(pieRadius).centroid(d);
-                    return `translate(${pos[0]},${pos[1]})`;
+                    const pos = labelArc.centroid(d);
+                    const x = pos[0] + (pos[0] > 0 ? 25 : -25);
+                    return `translate(${x},${pos[1]})`;
                 })
-                .style('text-anchor', 'middle')
+                .style('text-anchor', d => labelArc.centroid(d)[0] > 0 ? 'start' : 'end')
                 .style('font-size', '13px')
                 .style('fill', '#333');
         });

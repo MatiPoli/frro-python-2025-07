@@ -65,7 +65,7 @@ def profile_view(request):
             # Eliminar todo lo que esté entre paréntesis y espacios extra
             main_cat = re.sub(r"\s*\(.*?\)", "", k).strip()
             percent = (v / total) * 100 if total > 0 else 0
-            if percent < 3:
+            if percent < 2:
                 otras_count += v
             else:
                 chart_data_list.append({'category': main_cat, 'count': v})
