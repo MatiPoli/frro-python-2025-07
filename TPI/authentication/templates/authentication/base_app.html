@@ -9,7 +9,6 @@
     
     <link rel="stylesheet" href="{% static 'css/base_app.css' %}">
     {% block extra_css %}{% endblock %}
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -24,7 +23,7 @@
         <div class="content-card">
             
             <nav class="card-nav">
-                <a href="/" class="nav-btn home-btn">Ir a Home</a>
+                <a href="/yt/profile/" class="nav-btn home-btn">Perfil</a>
                 <a href="{% url 'ytfollowers_home' %}" class="nav-btn green-btn ml-2">Seguidos</a>
                 <a href="{% url 'account_logout' %}" class="nav-btn red-btn">Cerrar Sesión</a>
             </nav>

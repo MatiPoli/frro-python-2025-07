@@ -24,6 +24,10 @@
         background-color: #c0392b;
     }
 }
+
+.red-btn:hover {
+    background-color: #c0392b;
+}
 /* --- ESTILOS PARA LA PLANTILLA BASE DE LA APP --- */
 
 /* Aseguramos que el body tenga el color de fondo correcto */
@@ -60,7 +64,6 @@ body {
     padding: 30px 40px;
 }
 
-/* La barra de navegación dentro de la tarjeta */
 .card-nav {
     display: flex;
     justify-content: space-between; /* Botones a los extremos */
@@ -70,64 +73,33 @@ body {
     border-bottom: 1px solid #e0e0e0; /* Línea divisoria sutil */
 }
 
-/* Estilo general para los botones de la barra de navegación */
-.card-nav .nav-btn {
-    padding: 8px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    border: 2px solid transparent;
-    transition: all 0.2s ease;
-}
-
-/* Botón de "Ir a Home" (estilo secundario) */
-.card-nav .home-btn {
+.nav-btn, .home-btn {
+    color: #fff;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 8px 20px;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #fff;
-    background-color: #4285F4;
-    border: none;
     border-radius: 8px;
-    cursor: pointer;
     text-decoration: none;
+    border: none;
+    cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+.home-btn {
+    color: #fff;
+    background-color: #4285F4;
+}
 
-.card-nav .home-btn:hover {
-    background-color: #357ae8;
+.home-btn:hover {
+    background-color: #1a4ca3;
 }
 
 /* Botón de "Cerrar Sesión" (estilo de peligro/salida) */
 /* Global nav-btn styles for all buttons */
 
-.nav-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 20px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-
-.nav-btn:not(.red-btn):not(.green-btn):hover {
-    background-color: #357ae8;
-}
-
-/* Green button for Seguidos */
 .green-btn {
     background-color: #22c55e;
 }
@@ -135,12 +107,28 @@ body {
     background-color: #16a34a;
 }
 
-/* Espacio para el contenido principal */
 .card-content {
-    /* Aquí irán los estilos para el contenido específico de cada página si es necesario */
     color: #333;
 }
 
 .unselectable {
     user-select: none;
+}
+
+/* Normaliza <button> y <a> con nav-btn para que se vean igual */
+button.nav-btn, a.nav-btn {
+    padding: 15px 20px !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
+    line-height: 1.1 !important;
 }
