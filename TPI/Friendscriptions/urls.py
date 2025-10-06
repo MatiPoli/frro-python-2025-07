@@ -21,7 +21,6 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path("polls/", include("polls.urls")),
     path("yt/", include("ytProfile.urls")),
     path("yt/", include("ytComparasion.urls")),
     path("yt/", include("ytFollowers.urls")),

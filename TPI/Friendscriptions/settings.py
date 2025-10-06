@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "polls.apps.PollsConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,7 +80,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Friendscriptions.wsgi.application'
 
 # Allauth configuration 
-SITE_ID = 2
+SITE_ID = 3
 
 ACCOUNT_LOGOUT_CONFIRMATION_ANONYMOUS_USER = False
 ACCOUNT_LOGOUT_ON_GET = True
