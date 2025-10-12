@@ -3,18 +3,13 @@
 
 {% block title %}Mi Perfil - FriendScriptions{% endblock %}
 
-<!-- Ponemos el contenido específico de esta página dentro del bloque 'content' -->
-{% block content %}
-
-    
-<!DOCTYPE html>
-<html lang="es">
-<head>
+{% block extra_css %}
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-</head>
-<body>
+{% endblock %}
 
+<!-- Ponemos el contenido específico de esta página dentro del bloque 'content' -->
+{% block content %}
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl p-8">
         <h2 class="text-4xl font-bold text-gray-700 text-center mb-8">Tu Perfil de FriendScriptions</h2>
         <header class="grid grid-cols-2 gap-8 mb-10">
@@ -40,8 +35,6 @@
             </div>
         </header>
 
-        
-        
         <section class="bg-gray-50 p-6 rounded-xl shadow-md w-full mt-8">
             <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Lista de Suscripciones</h2>
             <ol class="h-96 overflow-y-scroll space-y-2 text-gray-600">
@@ -67,7 +60,30 @@
                 </div>
             </div>
         </section>
-        </div>
+
+        <!-- Canales Recomendados -->
+        <section class="bg-gray-50 p-6 rounded-xl shadow-md w-full mt-8">
+            <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Canales Recomendados para Ti</h2>
+            {% if recommendations %}
+                <p class="text-gray-600 mb-4">Basado en las suscripciones de tus amigos y tus intereses.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {% for canal in recommendations %}
+                        <a href="https://www.youtube.com/channel/{{ canal.idCanal }}" target="_blank" rel="noopener noreferrer" class="block">
+                            <div class="bg-white rounded-lg shadow-sm p-4 text-center hover:shadow-lg transition-shadow duration-200 h-full">
+                                {% if canal.thumbnail_url %}
+                                    <img src="{{ canal.thumbnail_url }}" alt="Miniatura de {{ canal.nombreCanal }}" class="w-24 h-24 rounded-full mx-auto mb-3 border border-gray-300 object-cover">
+                                {% endif %}
+                                <h3 class="font-bold text-gray-800">{{ canal.nombreCanal }}</h3>
+                                <p class="text-sm text-gray-500">Puntuación: {{ canal.score|floatformat:0 }}</p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center text-gray-500 mt-4">No tenemos recomendaciones para ti en este momento.</p>
+                <p class="text-center text-gray-500">Intenta seguir a más usuarios para que podamos generar recomendaciones personalizadas.</p>
+            {% endif %}
+        </section>
     </div>
 
     <script>
@@ -82,19 +98,15 @@
                 return;
             }
 
-
-
-
             // Pie chart (bigger)
             const pieWidth = 800, pieHeight = 500;
-            const pieRadius = 150; // pieRadius fijo e independiente
+            const pieRadius = 150;
             const labelArc = d3.arc().innerRadius(pieRadius + 10).outerRadius(pieRadius + 10);
             const pieSvg = d3.select("#pie-chart")
                 .attr("width", pieWidth)
                 .attr("height", pieHeight)
                 .append("g")
                 .attr("transform", `translate(${pieWidth / 2},${pieHeight / 2})`);
-
 
             // Usar el color definido en los datos
             const color = d => d.data.color;
@@ -155,6 +167,4 @@
                 .style('fill', '#333');
         });
     </script>
-</body>
-</html>
 {% endblock %}

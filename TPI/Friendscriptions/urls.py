@@ -24,6 +24,7 @@ urlpatterns = [
     path("yt/", include("ytProfile.urls")),
     path("yt/", include("ytComparasion.urls")),
     path("yt/", include("ytFollowers.urls")),
+    path("yt/", include("ytRecommendation.urls")),
     path("", include("authentication.urls")),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
