@@ -47,7 +47,6 @@
                                 
                                 <th class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 text-center text-blue-700 dark:text-blue-300 font-semibold">Foto</th>
                                 <th class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 text-center text-blue-700 dark:text-blue-300 font-semibold">Usuario</th>
-                                <th class="py-3 px-6 border-r border-blue-200 dark:border-blue-800 text-center text-blue-700 dark:text-blue-300 font-semibold">Email</th>
                                 <th class="py-3 px-6 text-center text-blue-700 dark:text-blue-300 font-semibold">Acción</th>
                             </tr>
                         </thead>
@@ -63,7 +62,6 @@
                                     {% endif %}
                                 </td>
                                 <td class="py-3 px-6 font-medium text-gray-800 dark:text-white" style="text-align: center;">{{ user.username }}</td>
-                                <td class="py-3 px-6 text-gray-600 dark:text-gray-300" style="text-align: center;">{{ user.email }}</td>
                                 <td class="py-3 px-6" style="text-align: center;">
                                     <form method="post" action="" style="display:inline;">
                                         {% csrf_token %}

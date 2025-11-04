@@ -26,7 +26,16 @@ def home(request):
             })
 
     if query:
-        results = User.objects.filter(username__icontains=query)
+        results_query = User.objects.filter(username__icontains=query)
+
+        # Excluyo al 'admin'
+        results_query = results_query.exclude(username='admin')
+
+        # Si el usuario está autenticado se excluye a sí mismo
+        if request.user.is_authenticated:
+            results_query = results_query.exclude(id=request.user.id)
+
+        results = results_query
 
     if request.method == 'POST':
         user_id = request.POST.get('user_id')

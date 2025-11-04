@@ -3,11 +3,17 @@
 
 {% block title %}Mi Perfil - FriendScriptions{% endblock %}
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
 {% block extra_css %}
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
 {% endblock %}
+</head>
 
+</html>
+<body>
 <!-- Ponemos el contenido específico de esta página dentro del bloque 'content' -->
 {% block content %}
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl p-8">
@@ -168,3 +174,5 @@
         });
     </script>
 {% endblock %}
+</body>
+</html>
