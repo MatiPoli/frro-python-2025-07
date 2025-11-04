@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-dw4b6=hv_t&c@4bzq=2o$ws3srlxq%j3k8r$d33lh12oc*cb_A
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1'
+]
 
 
 # Application definition
@@ -66,7 +69,7 @@ ROOT_URLCONF = 'Friendscriptions.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,7 +84,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Friendscriptions.wsgi.application'
 
 # Allauth configuration 
-SITE_ID = 3
+SITE_ID = 0
 
 ACCOUNT_LOGOUT_CONFIRMATION_ANONYMOUS_USER = False
 ACCOUNT_LOGOUT_ON_GET = True

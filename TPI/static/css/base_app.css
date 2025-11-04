@@ -1,49 +1,22 @@
-/* Dark gray button for actions */
-.dark-btn {
-    background-color: #333;
-    color: #fff;
-    font-size: 0.9rem;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-.dark-btn:hover {
-    background-color: #222;
-}
-/* Red button for logout */
-.red-btn {
-    background-color: #e74c3c;
-    hover {
-        background-color: #c0392b;
-    }
+.dark-btn, .red-btn {
+    /* ... existing styles ... */
 }
 
 .red-btn:hover {
     background-color: #c0392b;
 }
-/* --- ESTILOS PARA LA PLANTILLA BASE DE LA APP --- */
 
-/* Aseguramos que el body tenga el color de fondo correcto */
 body {
     background-color: #f4f7f6;
     font-family: 'Poppins', sans-serif;
 }
 
-/* Un contenedor para centrar todo el contenido de la app */
+/* Contenedor para centrar todo el contenido de la app */
 .app-wrapper {
     max-width: 1000px;
-    margin: 40px auto; /* Centra el contenedor y le da espacio arriba/abajo */
     padding: 20px;
 }
 
-/* El título de la app que va arriba */
 .app-header {
     text-align: center;
     margin-bottom: 25px;
@@ -56,7 +29,6 @@ body {
     text-decoration: none;
 }
 
-/* La tarjeta blanca principal */
 .content-card {
     background-color: #ffffff;
     border-radius: 16px;
@@ -64,90 +36,117 @@ body {
     padding: 30px 40px;
 }
 
-.card-nav {
-    display: flex;
-    align-items: center;
+/* --- Desktop Navigation --- */
+.card-nav-desktop {
+    flex-wrap: wrap;
+    justify-content: left;
     gap: 10px;
     padding-bottom: 20px;
     margin-bottom: 30px;
-    border-bottom: 1px solid #e0e0e0; /* Línea divisoria sutil */
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.card-nav .nav-btn.red-btn {
+.card-nav-desktop .nav-btn.red-btn {
     margin-left: auto;
 }
 
+/* --- Mobile Navigation (Hamburger) --- */
+.card-nav-mobile {
+    /* display is handled by Tailwind classes */
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: right; /* Aligns hamburger button to the right */
+}
 
+.hamburger-btn {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px;
+    display: inline-flex;
+}
+
+.mobile-menu {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.mobile-menu .nav-btn {
+    width: 100%;
+    justify-content: center;
+}
+
+/* --- Generic Button Styles --- */
 .nav-btn, .home-btn {
+    /* ... (styles for colors, padding, etc.) ... */
     color: #fff;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 20px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.home-btn {
-    color: #fff;
-    background-color: #4285F4;
-}
-
-.home-btn:hover {
-    background-color: #1a4ca3;
-}
-
-/* Botón de "Cerrar Sesión" (estilo de peligro/salida) */
-/* Global nav-btn styles for all buttons */
-
-.green-btn {
-    background-color: #22c55e;
-}
-.green-btn:hover {
-    background-color: #16a34a;
-}
-
-.orange-btn {
-    background-color: #f59e42;
-}
-.orange-btn:hover {
-    background-color: #d97706;
-}
-
-.blue-btn {
-    background-color: #2563eb;
-}
-.blue-btn:hover {
-    background-color: #1e40af;
-}
-
-.card-content {
-    color: #333;
-}
-
-.unselectable {
-    user-select: none;
-}
-
-/* Normaliza <button> y <a> con nav-btn para que se vean igual */
-button.nav-btn, a.nav-btn {
     padding: 15px 20px !important;
     font-size: 1.1rem !important;
     font-weight: 600 !important;
     border-radius: 8px !important;
-    color: #fff !important;
-    border: none !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
-    cursor: pointer;
     text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    border: none !important;
+    cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
     line-height: 1.1 !important;
+}
+
+.home-btn { background-color: #4285F4; }
+.home-btn:hover { background-color: #1a4ca3; }
+.green-btn { background-color: #22c55e; }
+.green-btn:hover { background-color: #16a34a; }
+.orange-btn { background-color: #f59e42; }
+.orange-btn:hover { background-color: #d97706; }
+.red-btn { background-color: #e74c3c; }
+.red-btn:hover { background-color: #c0392b; }
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .app-header{
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .app-wrapper {
+        padding: 0;
+    }
+
+    .content-card {
+        padding: 20px;
+        border-radius: 0; /* Optional: remove border-radius on mobile for a full-width feel */
+    }
+
+    .app-header .logo {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-card {
+        padding: 15px;
+    }
+
+    .app-header{
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .app-wrapper{
+        padding: 0;
+    }
+
+    /* Adjust button text size on the smallest screens */
+    button.nav-btn, a.nav-btn {
+        padding: 12px 15px !important;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        font-size: 1rem !important;
+    }
 }

@@ -1,5 +1,6 @@
 <!-- Le decimos a Django que herede de nuestra nueva plantilla base -->
-{% extends 'authentication/base_app.html' %}
+{% extends 'base_app.html' %}
+{% load static %}
 
 {% block title %}Mi Perfil - FriendScriptions{% endblock %}
 
@@ -16,34 +17,37 @@
 <body>
 <!-- Ponemos el contenido específico de esta página dentro del bloque 'content' -->
 {% block content %}
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl p-8">
-        <h2 class="text-4xl font-bold text-gray-700 text-center mb-8">Tu Perfil de FriendScriptions</h2>
-        <header class="grid grid-cols-2 gap-8 mb-10">
-            <div class="flex flex-col items-center justify-center h-full">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl p-4 sm:p-8">
+        <!-- Título Responsivo -->
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-700 text-center mb-8">Tu Perfil de FriendScriptions</h2>
+
+        <header class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 items-center">
+            <div class="flex flex-col items-center justify-center">
                 {% if google_photo %}
-                    <img src="{{ google_photo }}" alt="Foto de perfil" class="w-56 h-56 rounded-full shadow-lg border-4 border-gray-300 object-cover" />
+                    <img src="{{ google_photo }}" alt="Foto de perfil" class="w-32 h-32 sm:w-48 sm:h-48 rounded-full shadow-lg border-4 border-gray-300 object-cover" />
                 {% endif %}
-                <h1 class="text-3xl font-bold text-gray-800 mt-4">{{ username }}</h1>
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mt-4">{{ username }}</h1>
             </div>
-            <div class="flex flex-col items-center justify-center h-full">
-                <div class="bg-blue-50 p-4 rounded-xl shadow-inner border border-blue-200 mb-3 w-40 text-center">
+
+            <div class="flex flex-row flex-wrap justify-center gap-4">
+                <div class="bg-blue-50 p-4 rounded-xl shadow-inner border border-blue-200 w-40 text-center">
                     <p class="text-3xl font-bold text-blue-600">{{ following_count }}</p>
-                    <p class="text-gray-600 mt-2">Seguidos</p>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Seguidos</p>
                 </div>
-                <div class="bg-purple-50 p-4 rounded-xl shadow-inner border border-purple-200 mb-3 w-40 text-center">
+                <div class="bg-purple-50 p-4 rounded-xl shadow-inner border border-purple-200 w-40 text-center">
                     <p class="text-3xl font-bold text-purple-600">{{ followers_count }}</p>
-                    <p class="text-gray-600 mt-2">Seguidores</p>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Seguidores</p>
                 </div>
                 <div class="bg-green-50 p-4 rounded-xl shadow-inner border border-green-200 w-40 text-center">
                     <p class="text-3xl font-bold text-green-600">{{ subscriptions_count }}</p>
-                    <p class="text-gray-600 mt-2">Suscripciones</p>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">Suscripciones</p>
                 </div>
             </div>
         </header>
 
-        <section class="bg-gray-50 p-6 rounded-xl shadow-md w-full mt-8">
-            <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Lista de Suscripciones</h2>
-            <ol class="h-96 overflow-y-scroll space-y-2 text-gray-600">
+        <section class="bg-gray-50 p-4 sm:p-6 rounded-xl shadow-md w-full mt-8">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Lista de Suscripciones</h2>
+            <ol class="h-72 sm:h-96 overflow-y-scroll space-y-2 text-gray-600">
                 {% for sub in subscriptions %}
                     <li class="p-3 bg-white rounded-lg shadow-sm hover:bg-gray-100 transition-colors duration-200 flex items-center">
                         <span class="font-bold text-blue-400 mr-3">{{ forloop.counter }}.</span>
@@ -52,27 +56,28 @@
                         {% else %}
                             <span class="w-10 h-10 mr-3 rounded-full bg-gray-200 flex items-center justify-center text-gray-400">?</span>
                         {% endif %}
-                        <span>{{ sub.title }} <span class="text-sm text-gray-400">({{ sub.topic }})</span></span>
+                        <span class="text-sm sm:text-base">{{ sub.title }} <span class="text-xs sm:text-sm text-gray-400">({{ sub.topic }})</span></span>
                     </li>
                 {% endfor %}
             </ol>
         </section>
-        <!-- Gráfico de distribución de suscripciones (solo pie chart, más grande) -->
-        <section class="bg-gray-50 p-6 rounded-xl shadow-md w-full mt-8">
-            <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Distribución de Suscripciones</h2>
-            <div class="flex items-center justify-center">
-                <div id="pie-chart-container" class="h-[500px] w-[800px] flex items-center justify-center">
-                    <svg id="pie-chart" width="800" height="500"></svg>
+
+        <section class="bg-gray-50 p-4 sm:p-6 rounded-xl shadow-md w-full mt-8">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Distribución de Suscripciones</h2>
+            <div class="flex flex-col items-center justify-center">
+                <div id="pie-chart-container" class="w-full h-[400px] sm:h-[500px] flex items-center justify-center">
+                    <svg id="pie-chart"></svg>
                 </div>
+                <div id="chart-legend" class="mt-4 p-4"></div>
             </div>
         </section>
 
         <!-- Canales Recomendados -->
-        <section class="bg-gray-50 p-6 rounded-xl shadow-md w-full mt-8">
-            <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Canales Recomendados para Ti</h2>
+        <section class="bg-gray-50 p-4 sm:p-6 rounded-xl shadow-md w-full mt-8">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Canales Recomendados para Ti</h2>
             {% if recommendations %}
                 <p class="text-gray-600 mb-4">Basado en las suscripciones de tus amigos y tus intereses.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {% for canal in recommendations %}
                         <a href="https://www.youtube.com/channel/{{ canal.idCanal }}" target="_blank" rel="noopener noreferrer" class="block">
                             <div class="bg-white rounded-lg shadow-sm p-4 text-center hover:shadow-lg transition-shadow duration-200 h-full">
@@ -104,9 +109,11 @@
                 return;
             }
 
-            // Pie chart (bigger)
-            const pieWidth = 800, pieHeight = 500;
-            const pieRadius = 150;
+            // Pie chart
+            const isMobile = window.innerWidth < 769;
+            const pieWidth = isMobile ? 300 : 800;
+            const pieHeight = isMobile ? 300 : 500;
+            const pieRadius = isMobile ? 120 : 150;
             const labelArc = d3.arc().innerRadius(pieRadius + 10).outerRadius(pieRadius + 10);
             const pieSvg = d3.select("#pie-chart")
                 .attr("width", pieWidth)
@@ -136,9 +143,25 @@
                 .style('stroke-width', '2px')
                 .style('opacity', 0.8);
 
-            // Etiquetas
-            // Calcular el total para porcentajes
             const total = d3.sum(chartData, d => d.count);
+
+            if (isMobile){
+                document.getElementById('chart-legend').style.display = 'block';
+                    const legendList = document.createElement('ul');
+                    legendList.className = 'space-y-2 text-left';
+
+                    chartData.forEach(item => {
+                        const percent = ((item.count / total) * 100).toFixed(1);
+                        const li = document.createElement('li');
+                        li.className = 'flex items-center text-sm';
+                        li.innerHTML = `
+                            <span class="w-4 h-4 rounded-full mr-3" style="background-color: ${item.color};"></span>
+                            <span>${item.category} (${percent}%)</span>
+                        `;
+                        legendList.appendChild(li);
+                    });
+                    document.getElementById('chart-legend').appendChild(legendList);
+            } else {
             // Etiquetas fuera del gráfico con líneas líderes
             // Usar solo la versión ajustada de labelArc
 
@@ -169,8 +192,9 @@
                     return `translate(${x},${pos[1]})`;
                 })
                 .style('text-anchor', d => labelArc.centroid(d)[0] > 0 ? 'start' : 'end')
-                .style('font-size', '13px')
+                .style('font-size', '0.73rem')
                 .style('fill', '#333');
+            }
         });
     </script>
 {% endblock %}

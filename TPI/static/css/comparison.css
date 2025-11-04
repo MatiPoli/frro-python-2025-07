@@ -142,3 +142,63 @@
         margin-top: 15px;
         color: #2c3e50;
     }
+
+/* --- Media Queries for Responsiveness --- */
+
+@media (min-width: 768px) {
+    .comparison-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .comparison-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .compatibility-section h3 {
+        font-size: 1.4rem;
+    }
+
+    .compatibility-score {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .comparison-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .user-profile-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .category-bar {
+        height: 35px;
+    }
+
+    .category-segment {
+        font-size: 0.75rem;
+    }
+
+    .legend {
+        gap: 10px;
+    }
+
+    .legend-item {
+        font-size: 0.8rem;
+    }
+
+    .compatibility-section {
+        padding: 20px;
+    }
+
+    .compatibility-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .compatibility-score {
+        font-size: 1.5rem;
+    }
+}

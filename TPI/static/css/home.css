@@ -198,3 +198,74 @@ body {
 .unselectable {
     user-select: none;
 }
+
+/* --- Media Queries for Responsiveness --- */
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 20px;
+    }
+
+    .hero h2 {
+        font-size: 2.2rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .features .container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .features {
+        padding-top: 60px;
+    }
+
+    .feature-card {
+        flex-basis: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero {
+        padding: 40px 15px;
+    }
+
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .google-btn {
+        font-size: 1rem;
+        padding: 6px 12px 6px 6px;
+    }
+
+    .google-icon-wrapper {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+    }
+
+    .google-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .feature-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .feature-card .icon {
+        font-size: 2.5rem;
+    }
+}
